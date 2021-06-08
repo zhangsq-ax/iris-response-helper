@@ -23,6 +23,9 @@ func NewResponseHelper(ctx *iris.Context, logFunc func(...interface{})) *Respons
 }
 
 func (h *ResponseHelper) ResponseJSON(errLabel string) {
+	if errLabel == "" {
+		errLabel = "Failed to write response"
+	}
 	_, err := h.ctx.JSON(h)
 	if err != nil {
 		h.ErrorLog(errLabel, err)
@@ -31,6 +34,9 @@ func (h *ResponseHelper) ResponseJSON(errLabel string) {
 
 func (h *ResponseHelper) Response(contentType string, errLabel string) {
 	if h.Data != nil {
+		if errLabel == "" {
+			errLabel = "Failed to write response"
+		}
 		h.ctx.Header("Content-Type", contentType)
 		_, err := h.ctx.Write(h.Data.([]byte))
 		if err != nil {
