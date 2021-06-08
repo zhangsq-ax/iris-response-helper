@@ -45,11 +45,14 @@ func (h *ResponseHelper) Response(contentType string, errLabel string) {
 	}
 }
 
-func (h *ResponseHelper) IsFailed(err error, status int) (isFailed bool) {
+func (h *ResponseHelper) IsFailed(err error, status int, resMsg string) (isFailed bool) {
 	isFailed = false
 	if err != nil {
+		if resMsg == "" {
+			resMsg = err.Error()
+		}
 		h.Status = status
-		h.Msg = err.Error()
+		h.Msg = resMsg
 		isFailed = true
 	}
 
