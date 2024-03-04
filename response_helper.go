@@ -26,7 +26,7 @@ func (h *ResponseHelper) ResponseJSON(errLabel string) {
 	if errLabel == "" {
 		errLabel = "Failed to write response"
 	}
-	_, err := h.ctx.JSON(h)
+	err := h.ctx.JSON(h)
 	if err != nil {
 		h.ErrorLog(errLabel, err)
 	}
